@@ -18,7 +18,9 @@ class LuxAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: <Widget>[
             LuxButtonSquare(
-              onTap: () {},
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
               backgroundColor: Theme.of(context).primaryColorDark,
               color: Theme.of(context).primaryColorLight,
               icon: Icons.menu,

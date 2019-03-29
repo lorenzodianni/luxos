@@ -11,6 +11,11 @@ class AuthView extends StatelessWidget {
       body: Container(
         child: Text('Auth View'),
       ),
+      drawer: Drawer(
+        child: Center(
+          child: const Text('Drawer'),
+        ),
+      ),
     );
   }
 }
