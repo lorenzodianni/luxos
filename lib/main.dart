@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:luxos/auth/auth_view.dart';
+import 'package:luxos/application/application.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Luxos());
 
-class MyApp extends StatelessWidget {
+class Luxos extends StatelessWidget {
+  Luxos() {
+    Application.configureRoutes();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
         accentColor: Colors.yellow,
       ),
-      home: AuthView(),
+      home: HomeView(),
     );
   }
 }

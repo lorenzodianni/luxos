@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:luxos/application/application.dart';
 import 'package:luxos/shared/shared.dart';
 
 class LuxAppBar extends StatelessWidget implements PreferredSizeWidget {
-
   final bool back;
+
   LuxAppBar({this.back = true});
 
   @override
@@ -25,11 +26,15 @@ class LuxAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Theme.of(context).primaryColorLight,
               icon: Icons.menu,
             ),
-            back ? LuxButtonSquare(
-              onTap: () {},
-              borderRadius: 56,
-              icon: Icons.arrow_back_ios,
-            ) : Container(),
+            back
+                ? LuxButtonSquare(
+                    onTap: () {
+                      Application.router.pop(context);
+                    },
+                    borderRadius: 56,
+                    icon: Icons.arrow_back_ios,
+                  )
+                : Container(),
             Expanded(child: Container()),
             LuxButtonSquare(
               borderRadius: 56,
