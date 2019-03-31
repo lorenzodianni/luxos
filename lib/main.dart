@@ -13,7 +13,6 @@ class Luxos extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       showSemanticsDebugger: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
         primaryColorLight: Colors.grey.shade50,
         primaryColorDark: Colors.black,
