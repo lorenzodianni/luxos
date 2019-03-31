@@ -40,7 +40,9 @@ class LuxAppBar extends StatelessWidget implements PreferredSizeWidget {
             NavigationButton(
               icon: Icons.shopping_cart,
               active: activeRoute,
-              onTap: () {},
+              onTap: (BuildContext context) {
+                Application.router.navigateTo(context, BasketView.routerPath);
+              },
             ),
           ],
         ),
@@ -70,7 +72,7 @@ class NavigationButton extends StatelessWidget {
       children: <Widget>[
         LuxButtonSquare(
           borderRadius: borderRadius,
-          onTap: onTap,
+          onTap: () => onTap(context),
           icon: icon,
         ),
         Positioned(
@@ -104,7 +106,7 @@ class NavigationBackButton extends StatelessWidget {
     return visible
         ? NavigationButton(
             icon: Icons.arrow_back_ios,
-            onTap: () => Application.router.pop(context),
+            onTap: (context) => Application.router.pop(context),
           )
         : Container();
   }

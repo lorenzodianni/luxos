@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:luxos/core/core.dart';
 import 'package:luxos/shared/shared.dart';
 
-class ProductListView extends StatelessWidget {
+class ProductListView extends StatelessWidget implements View {
   static const routerPath = '/products';
 
-  static routerHandler() {
+  static Handler routerHandler() {
     return Handler(handlerFunc: (
       BuildContext context,
       Map<String, dynamic> params,
@@ -16,9 +17,7 @@ class ProductListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: LuxAppBar(),
-      drawer: LuxDrawer(),
+    return LuxScaffold(
       body: Center(
         child: Text('ProductListView'),
       ),
