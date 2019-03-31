@@ -4,8 +4,9 @@ import 'package:luxos/shared/shared.dart';
 
 class LuxAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool back;
+  final IconData activeRoute;
 
-  LuxAppBar({this.back = true});
+  LuxAppBar({this.back = true, this.activeRoute});
 
   @override
   final Size preferredSize = Size.fromHeight(kToolbarHeight + 0.0);
@@ -18,47 +19,111 @@ class LuxAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: SafeArea(
         child: Row(
           children: <Widget>[
-            LuxButtonSquare(
-              onTap: () {
-                Scaffold.of(context).openDrawer();
-              },
-              backgroundColor: Theme.of(context).primaryColorDark,
-              color: Theme.of(context).primaryColorLight,
-              icon: Icons.menu,
-            ),
-            back
-                ? LuxButtonSquare(
-                    onTap: () {
-                      Application.router.pop(context);
-                    },
-                    borderRadius: 56,
-                    icon: Icons.arrow_back_ios,
-                  )
-                : Container(),
+            NavigationMenuButton(),
+            NavigationBackButton(visible: back),
             Expanded(child: Container()),
-            LuxButtonSquare(
-              borderRadius: 56,
-              onTap: () {},
+            NavigationButton(
               icon: Icons.receipt,
-            ),
-            LuxButtonSquare(
-              borderRadius: 56,
+              active: activeRoute,
               onTap: () {},
+            ),
+            NavigationButton(
               icon: Icons.group,
-            ),
-            LuxButtonSquare(
-              borderRadius: 56,
+              active: activeRoute,
               onTap: () {},
+            ),
+            NavigationButton(
               icon: Icons.favorite_border,
-            ),
-            LuxButtonSquare(
-              borderRadius: 56,
+              active: activeRoute,
               onTap: () {},
+            ),
+            NavigationButton(
               icon: Icons.shopping_cart,
+              active: activeRoute,
+              onTap: () {},
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class NavigationButton extends StatelessWidget {
+  final IconData icon;
+  final IconData active;
+  final Function onTap;
+  final double borderRadius;
+
+  NavigationButton({
+    this.icon,
+    this.active,
+    this.onTap,
+    this.borderRadius = 56,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final double activeMarkerSize = 4;
+
+    return Stack(
+      children: <Widget>[
+        LuxButtonSquare(
+          borderRadius: borderRadius,
+          onTap: onTap,
+          icon: icon,
+        ),
+        Positioned(
+          bottom: 6,
+          left: (56 / 2) - (activeMarkerSize / 2),
+          child: icon == active
+              ? Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(activeMarkerSize),
+                    ),
+                  ),
+                  height: activeMarkerSize,
+                  width: activeMarkerSize,
+                )
+              : Container(),
+        ),
+      ],
+    );
+  }
+}
+
+class NavigationBackButton extends StatelessWidget {
+  final bool visible;
+
+  NavigationBackButton({this.visible});
+
+  @override
+  Widget build(BuildContext context) {
+    return visible
+        ? NavigationButton(
+            icon: Icons.arrow_back_ios,
+            onTap: () => Application.router.pop(context),
+          )
+        : Container();
+  }
+}
+
+class NavigationMenuButton extends StatelessWidget {
+  final bool visible;
+
+  NavigationMenuButton({this.visible});
+
+  @override
+  Widget build(BuildContext context) {
+    return LuxButtonSquare(
+      icon: Icons.menu,
+      onTap: () {
+        Scaffold.of(context).openDrawer();
+      },
+      color: Theme.of(context).primaryColorLight,
+      backgroundColor: Theme.of(context).primaryColorDark,
     );
   }
 }
