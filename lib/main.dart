@@ -19,7 +19,7 @@ class Luxos extends StatelessWidget {
         primarySwatch: Colors.grey,
         accentColor: Colors.yellow,
       ),
-      home: HomeView(),
+      home: LoginView(),
     );
   }
 }

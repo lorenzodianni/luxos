@@ -1,131 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:luxos/application/application.dart';
-import 'package:luxos/shared/shared.dart';
 
 class LuxAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool back;
-  final IconData activeRoute;
+  final List<Widget> children;
+  final String borderPosition;
 
-  LuxAppBar({this.back = true, this.activeRoute});
+  static String borderTop = 'top';
+  static String borderBottom = 'bottom';
+
+  LuxAppBar({this.children, this.borderPosition});
 
   @override
   final Size preferredSize = Size.fromHeight(kToolbarHeight + 0.0);
 
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColorLight,
-      ),
-      child: SafeArea(
+    return SafeArea(
+      child: Container(
+        height: 56,
+        decoration: BoxDecoration(
+          border: _createBorder(),
+          color: Theme.of(context).primaryColorLight,
+        ),
         child: Row(
-          children: <Widget>[
-            NavigationMenuButton(),
-            NavigationBackButton(visible: back),
-            Expanded(child: Container()),
-            NavigationButton(
-              icon: Icons.receipt,
-              active: activeRoute,
-              onTap: () {},
-            ),
-            NavigationButton(
-              icon: Icons.group,
-              active: activeRoute,
-              onTap: () {},
-            ),
-            NavigationButton(
-              icon: Icons.favorite_border,
-              active: activeRoute,
-              onTap: () {},
-            ),
-            NavigationButton(
-              icon: Icons.shopping_cart,
-              active: activeRoute,
-              onTap: (BuildContext context) {
-                Application.router.navigateTo(context, BasketView.routerPath);
-              },
-            ),
-          ],
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: children,
         ),
       ),
     );
   }
-}
 
-class NavigationButton extends StatelessWidget {
-  final IconData icon;
-  final IconData active;
-  final Function onTap;
-  final double borderRadius;
-
-  NavigationButton({
-    this.icon,
-    this.active,
-    this.onTap,
-    this.borderRadius = 56,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final double activeMarkerSize = 4;
-
-    return Stack(
-      children: <Widget>[
-        LuxButtonSquare(
-          borderRadius: borderRadius,
-          onTap: () => onTap(context),
-          icon: icon,
-        ),
-        Positioned(
-          bottom: 6,
-          left: (56 / 2) - (activeMarkerSize / 2),
-          child: icon == active
-              ? Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(activeMarkerSize),
-                    ),
-                  ),
-                  height: activeMarkerSize,
-                  width: activeMarkerSize,
-                )
-              : Container(),
-        ),
-      ],
-    );
+  Border _createBorder() {
+    if (borderPosition is String) {
+      return borderPosition == LuxAppBar.borderBottom
+          ? Border(bottom: _createBorderSide())
+          : Border(top: _createBorderSide());
+    }
+    return null;
   }
-}
 
-class NavigationBackButton extends StatelessWidget {
-  final bool visible;
-
-  NavigationBackButton({this.visible});
-
-  @override
-  Widget build(BuildContext context) {
-    return visible
-        ? NavigationButton(
-            icon: Icons.arrow_back_ios,
-            onTap: (context) => Application.router.pop(context),
-          )
-        : Container();
-  }
-}
-
-class NavigationMenuButton extends StatelessWidget {
-  final bool visible;
-
-  NavigationMenuButton({this.visible});
-
-  @override
-  Widget build(BuildContext context) {
-    return LuxButtonSquare(
-      icon: Icons.menu,
-      onTap: () {
-        Scaffold.of(context).openDrawer();
-      },
-      color: Theme.of(context).primaryColorLight,
-      backgroundColor: Theme.of(context).primaryColorDark,
-    );
+  BorderSide _createBorderSide() {
+    return BorderSide(color: Colors.grey.shade200);
   }
 }

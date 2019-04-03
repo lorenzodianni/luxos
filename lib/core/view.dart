@@ -1,5 +1,9 @@
+import 'package:fluro/fluro.dart';
+
 abstract class View {
-  static const routerPath = null;
+  static const routePath = null;
 
   static routerHandler() {}
+
+  static defineRoute(Router router) {}
 }

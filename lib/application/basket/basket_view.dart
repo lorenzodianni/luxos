@@ -15,6 +15,14 @@ class BasketView extends StatelessWidget implements View {
     });
   }
 
+  static defineRoute(Router router) {
+    router.define(
+      BasketView.routerPath,
+      handler: BasketView.routerHandler(),
+      transitionType: TransitionType.native,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return LuxScaffold(

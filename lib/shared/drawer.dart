@@ -8,7 +8,7 @@ class LuxDrawer extends StatelessWidget {
       'onTap': (BuildContext context) {
         Application.router.navigateTo(
           context,
-          HomeView.routerPath,
+          HomeView.routePath,
           clearStack: true,
         );
       },
@@ -16,7 +16,7 @@ class LuxDrawer extends StatelessWidget {
     {
       'text': 'Products',
       'onTap': (BuildContext context) {
-        Application.router.navigateTo(context, ProductListView.routerPath);
+        Application.router.navigateTo(context, ProductListView.routePath);
       },
     }
   ];

@@ -1,8 +1,10 @@
 import 'package:fluro/fluro.dart';
+import 'login/login.dart';
 import 'home/home.dart';
 import 'product/product.dart';
 import 'basket/basket.dart';
 
+export 'login/login.dart';
 export 'home/home.dart';
 export 'product/product.dart';
 export 'basket/basket.dart';
@@ -12,21 +14,10 @@ class Application {
 
   static configureRoutes() {
     final router = new Router();
-    router.define(
-      HomeView.routerPath,
-      handler: HomeView.routerHandler(),
-      transitionType: TransitionType.native,
-    );
-    router.define(
-      ProductListView.routerPath,
-      handler: ProductListView.routerHandler(),
-      transitionType: TransitionType.native,
-    );
-    router.define(
-      BasketView.routerPath,
-      handler: BasketView.routerHandler(),
-      transitionType: TransitionType.native,
-    );
+    LoginView.defineRoute(router);
+    HomeView.defineRoute(router);
+    ProductListView.defineRoute(router);
+    BasketView.defineRoute(router);
     Application.router = router;
   }
 }

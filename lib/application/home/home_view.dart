@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
-import 'package:luxos/core/core.dart';
 import 'package:luxos/shared/shared.dart';
 
-class HomeView extends StatelessWidget implements View {
-  static const routerPath = '/home';
+class HomeView extends StatelessWidget {
+  static const routePath = '/home';
 
   static Handler routerHandler() {
     return Handler(handlerFunc: (
@@ -13,6 +12,14 @@ class HomeView extends StatelessWidget implements View {
     ) {
       return HomeView();
     });
+  }
+
+  static defineRoute(Router router) {
+    router.define(
+      HomeView.routePath,
+      handler: HomeView.routerHandler(),
+      transitionType: TransitionType.native,
+    );
   }
 
   @override
