@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
-import 'package:luxos/core/core.dart';
 import 'package:luxos/shared/shared.dart';
 
-class BasketView extends StatelessWidget implements View {
+class BasketView extends StatelessWidget {
   static const routerPath = '/basket';
 
   static Handler routerHandler() {
