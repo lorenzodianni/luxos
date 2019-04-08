@@ -3,20 +3,22 @@ import 'package:fluro/fluro.dart';
 import 'package:luxos/application/application.dart';
 import 'package:luxos/shared/shared.dart';
 
-class LoginView extends StatelessWidget {
+class AuthView extends StatelessWidget {
   static const routerPath = '/login';
 
   static Handler routerHandler() {
-    return Handler(handlerFunc: (BuildContext context,
-        Map<String, dynamic> params,) {
-      return LoginView();
+    return Handler(handlerFunc: (
+      BuildContext context,
+      Map<String, dynamic> params,
+    ) {
+      return AuthView();
     });
   }
 
   static defineRoute(Router router) {
     router.define(
-      LoginView.routerPath,
-      handler: LoginView.routerHandler(),
+      AuthView.routerPath,
+      handler: AuthView.routerHandler(),
       transitionType: TransitionType.native,
     );
   }
@@ -94,12 +96,18 @@ class LoginView extends StatelessWidget {
 
   _shouldLogin(BuildContext context) {
     if (_formKey.currentState.validate()) {
-      Application.router.navigateTo(
-        context,
-        HomeView.routePath,
-        clearStack: true,
-        transition: TransitionType.nativeModal,
-      );
+      auth.login('foo').then((token) {
+        this._goToHome(context);
+      });
     }
+  }
+
+  _goToHome(BuildContext context) {
+    Application.router.navigateTo(
+      context,
+      HomeView.routePath,
+      clearStack: true,
+      transition: TransitionType.nativeModal,
+    );
   }
 }

@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:convert';
 import 'package:luxos/application/application.dart';
+import 'package:luxos/core/core.dart';
 
-void main() => runApp(Luxos());
+_parseAndDecode(String response) => jsonDecode(response);
+
+parseJson(String text) => compute(_parseAndDecode, text);
+
+void main() {
+  // httpClient.interceptors
+  (httpClient.transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
+  httpClient.options.receiveTimeout = 10000;
+
+  runApp(Luxos());
+}
 
 class Luxos extends StatelessWidget {
   Luxos() {
@@ -19,7 +32,7 @@ class Luxos extends StatelessWidget {
         primarySwatch: Colors.grey,
         accentColor: Colors.yellow,
       ),
-      home: LoginView(),
+      home: AuthView(),
     );
   }
 }
