@@ -1,4 +1,4 @@
-import 'package:fluro/fluro.dart';
+import 'package:luxos/core/core.dart';
 import 'auth/auth.dart';
 import 'home/home.dart';
 import 'product/product.dart';
@@ -15,7 +15,7 @@ class Application {
   static Router router;
 
   static configureRoutes() {
-    final router = new Router();
+    final router = new LuxRouter();
     AuthView.defineRoute(router);
     HomeView.defineRoute(router);
     ProductListView.defineRoute(router);

@@ -36,7 +36,7 @@ class LuxDrawer extends StatelessWidget {
           return ListTile(
             title: Text(menu[index]['text']),
             onTap: () {
-              Application.router.pop(context);
+              Navigator.pop(context);
               menu[index]['onTap'](context);
             },
           );
