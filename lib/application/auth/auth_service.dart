@@ -2,17 +2,17 @@ import 'package:luxos/core/core.dart';
 import 'package:luxos/environment.dart';
 
 class Auth {
-  static Map<String, dynamic> jwt;
+  static String token;
 
   Auth();
 
-  Future login(sha1) {
-    final url = '$BASE_PATH/adfs/finalize/$sha1';
+  Future login(String sha1) {
+    final url = '$BASE_PATH/adfs/finalize/' + sha1;
     return httpClient.post(url).then((dynamic response) {
-      Auth.jwt = response.data['data'];
-      return Auth.jwt;
+      Auth.token = response.data['data']['sessionId'];
+      return Auth.token;
     }, onError: (err) {
-      Auth.jwt = Map();
+      Auth.token = null;
     });
   }
 }

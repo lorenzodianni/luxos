@@ -2,6 +2,7 @@ export 'blur.dart';
 export 'button.dart';
 export 'button_square.dart';
 export 'app_bar.dart';
+export 'view_title.dart';
 export 'drawer.dart';
 export 'scaffold.dart';
 export 'input.dart';
