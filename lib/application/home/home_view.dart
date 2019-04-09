@@ -26,9 +26,11 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LuxScaffold(
       hasBackButton: false,
-      body: Center(
-        child: Text('Home'),
-      ),
+      body: Column(
+        children: <Widget>[
+          ViewTitle(title: 'Home'),
+        ],
+      )
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:luxos/shared/shared.dart';
+import 'package:luxos/application/application.dart';
 import 'product.dart';
 
 class ProductListView extends StatelessWidget {
@@ -33,7 +34,12 @@ class ProductListView extends StatelessWidget {
             child: ViewTitle(title: 'Products'),
           ),
           SliverPadding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.fromLTRB(
+              Application.mainAxisSpacing,
+              0,
+              Application.mainAxisSpacing,
+              Application.mainAxisSpacing,
+            ),
             sliver: _productList(),
           ),
         ],
@@ -50,7 +56,10 @@ class ProductListView extends StatelessWidget {
           case ConnectionState.waiting:
           case ConnectionState.active:
             return SliverToBoxAdapter(
-              child: Center(child: CircularProgressIndicator()),
+              child: Padding(
+                padding: EdgeInsets.all(24),
+                child: Center(child: CircularProgressIndicator()),
+              ),
             );
             break;
           case ConnectionState.done:

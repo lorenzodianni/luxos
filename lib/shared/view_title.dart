@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luxos/application/application.dart';
 
 class ViewTitle extends StatelessWidget {
   final String title;
@@ -8,7 +9,12 @@ class ViewTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 26, 10, 16),
+      padding: EdgeInsets.fromLTRB(
+        Application.mainAxisSpacing,
+        26,
+        Application.mainAxisSpacing,
+        16,
+      ),
       child: Text(
         title,
         style: TextStyle(

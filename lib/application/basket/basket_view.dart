@@ -25,8 +25,10 @@ class BasketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LuxScaffold(
-      body: Center(
-        child: Text('Basket'),
+      body: Column(
+        children: <Widget>[
+          ViewTitle(title: 'Basket'),
+        ],
       ),
     );
   }

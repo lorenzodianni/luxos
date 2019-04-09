@@ -10,6 +10,8 @@ export 'product/product.dart';
 export 'basket/basket.dart';
 
 class Application {
+  static double mainAxisSpacing = 16;
+
   static Router router;
 
   static configureRoutes() {
