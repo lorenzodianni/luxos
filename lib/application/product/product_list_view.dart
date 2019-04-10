@@ -40,14 +40,14 @@ class ProductListView extends StatelessWidget {
               Application.mainAxisSpacing,
               Application.mainAxisSpacing,
             ),
-            sliver: _productList(),
+            sliver: _productList(context),
           ),
         ],
       ),
     );
   }
 
-  _productList() {
+  _productList(BuildContext context) {
     return FutureBuilder(
       future: productService.getProducts(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -70,7 +70,7 @@ class ProductListView extends StatelessWidget {
               crossAxisSpacing: 10,
               childAspectRatio: 0.76,
               children: List.generate(products.length, (index) {
-                return _createProduct(products[index]);
+                return _createProduct(context, products[index]);
               }),
             );
             break;
@@ -79,36 +79,44 @@ class ProductListView extends StatelessWidget {
     );
   }
 
-  Widget _createProduct(Product product) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: Image.network(
-            product.images.first,
-            fit: BoxFit.contain,
+  Widget _createProduct(BuildContext context, Product product) {
+    return GestureDetector(
+      onTap: () {
+        Application.router.navigateTo(
+          context,
+          ProductDetailView.routePartial + product.id,
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: Image.network(
+              product.images.first,
+              fit: BoxFit.contain,
+            ),
           ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: Text(
-                product.name,
-                style: TextStyle(fontWeight: FontWeight.bold),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  product.name,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                padding: EdgeInsets.only(top: 10, bottom: 4),
               ),
-              padding: EdgeInsets.only(top: 10, bottom: 4),
-            ),
-            Container(
-              child: Text(
-                product.id,
-                style: TextStyle(fontSize: 10),
+              Container(
+                child: Text(
+                  product.id,
+                  style: TextStyle(fontSize: 10),
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

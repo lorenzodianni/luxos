@@ -19,6 +19,7 @@ class Application {
     AuthView.defineRoute(router);
     HomeView.defineRoute(router);
     ProductListView.defineRoute(router);
+    ProductDetailView.defineRoute(router);
     BasketView.defineRoute(router);
     Application.router = router;
   }
