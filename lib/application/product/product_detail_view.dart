@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'product.dart';
 import 'package:luxos/core/core.dart';
 import 'package:luxos/shared/shared.dart';
 
@@ -30,11 +31,48 @@ class ProductDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LuxScaffold(
-      body: Column(
-        children: <Widget>[
-          ViewTitle(title: 'Product $id'),
-        ],
-      ),
+      body: _loadProduct(),
+    );
+  }
+
+  _loadProduct() {
+    return FutureBuilder(
+      future: productService.getProduct(id),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+          case ConnectionState.active:
+            return Padding(
+              padding: EdgeInsets.all(24),
+              child: Center(child: CircularProgressIndicator()),
+            );
+            break;
+          case ConnectionState.done:
+            return _buildPage(snapshot.data);
+            break;
+        }
+      },
+    );
+  }
+
+  _buildPage(Product product) {
+    return CustomScrollView(
+      primary: true,
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: ViewTitle(title: product.name),
+        ),
+//        SliverPadding(
+//          padding: EdgeInsets.fromLTRB(
+//            Application.mainAxisSpacing,
+//            0,
+//            Application.mainAxisSpacing,
+//            Application.mainAxisSpacing,
+//          ),
+//          sliver: _productList(context),
+//        ),
+      ],
     );
   }
 }

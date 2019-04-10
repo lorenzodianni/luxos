@@ -35,10 +35,19 @@ class ProductService {
     final url = '$BASE_PATH/products';
     final options = Options(headers: {'Authorization': Auth.token});
     return httpClient.get(url, options: options).then((res) {
-      var response = ProductListResponse.fromJson(res.data['data']);
-      return response;
+      return ProductListResponse.fromJson(res.data['data']);
     }, onError: (err) {
-      return err;
+      return Future.error(err);
+    });
+  }
+
+  Future getProduct(String id) {
+    final url = '$BASE_PATH/products/$id';
+    final options = Options(headers: {'Authorization': Auth.token});
+    return httpClient.get(url, options: options).then((res) {
+      return Product.fromJson(res.data['data']);
+    }, onError: (err) {
+      return Future.error(err);
     });
   }
 }
