@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'product.dart';
+import 'package:luxos/application/application.dart';
 import 'package:luxos/core/core.dart';
 import 'package:luxos/shared/shared.dart';
 
@@ -31,11 +31,11 @@ class ProductDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LuxScaffold(
-      body: _loadProduct(),
+      body: _loadProduct(context),
     );
   }
 
-  _loadProduct() {
+  _loadProduct(BuildContext context) {
     return FutureBuilder(
       future: productService.getProduct(id),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -49,19 +49,103 @@ class ProductDetailView extends StatelessWidget {
             );
             break;
           case ConnectionState.done:
-            return _buildPage(snapshot.data);
+            return _buildPage(context, snapshot.data);
             break;
         }
       },
     );
   }
 
-  _buildPage(Product product) {
+  _buildPage(BuildContext context, Product product) {
+    var size = MediaQuery.of(context).size;
     return CustomScrollView(
       primary: true,
       slivers: <Widget>[
+        SliverAppBar(
+          title: Text(
+            product.name,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          actions: <Widget>[
+            LuxButtonSquare(
+              onTap: () {},
+              icon: Icons.favorite_border,
+              borderRadius: 50,
+              backgroundColor: Colors.white.withOpacity(0),
+            )
+          ],
+          expandedHeight: size.width,
+          backgroundColor: Theme.of(context).primaryColorLight,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Hero(
+              tag: 'img-' + product.id,
+              child: Stack(
+                children: <Widget>[
+                  Image.network(
+                    product.images.first,
+                    height: size.width,
+                    width: size.width,
+                    fit: BoxFit.contain,
+                  ),
+                  Container(
+                    height: size.width,
+                    width: size.width,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: [0.1, 0.25],
+                        colors: [
+                          Colors.white.withOpacity(1),
+                          Colors.white.withOpacity(0.0)
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
         SliverToBoxAdapter(
-          child: ViewTitle(title: product.name),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(Application.mainAxisSpacing),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      product.id,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '1000,00 €',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 600,
+                child: Placeholder(),
+              ),
+            ],
+          ),
         ),
 //        SliverPadding(
 //          padding: EdgeInsets.fromLTRB(

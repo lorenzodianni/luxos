@@ -29,6 +29,8 @@ class ProductListResponse {
 }
 
 class ProductService {
+  Product activeProduct;
+
   ProductService();
 
   Future getProducts() {
@@ -44,11 +46,18 @@ class ProductService {
   Future getProduct(String id) {
     final url = '$BASE_PATH/products/$id';
     final options = Options(headers: {'Authorization': Auth.token});
+    if (activeProduct is Product && activeProduct.id == id) {
+      return Future.value(activeProduct);
+    }
     return httpClient.get(url, options: options).then((res) {
       return Product.fromJson(res.data['data']);
     }, onError: (err) {
       return Future.error(err);
     });
+  }
+
+  void setActiveProduct(Product product) {
+    activeProduct = product;
   }
 }
 

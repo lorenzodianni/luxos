@@ -79,44 +79,52 @@ class ProductListView extends StatelessWidget {
     );
   }
 
-  Widget _createProduct(BuildContext context, Product product) {
-    return GestureDetector(
-      onTap: () {
-        Application.router.navigateTo(
-          context,
-          ProductDetailView.routePartial + product.id,
-        );
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          ClipRRect(
+  Widget _productCard(Product product) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Hero(
+          tag: 'img-' + product.id,
+          child: ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: Image.network(
               product.images.first,
               fit: BoxFit.contain,
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  product.name,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                padding: EdgeInsets.only(top: 10, bottom: 4),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: Text(
+                product.name,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Container(
-                child: Text(
-                  product.id,
-                  style: TextStyle(fontSize: 10),
-                ),
+              padding: EdgeInsets.only(top: 10, bottom: 4),
+            ),
+            Container(
+              child: Text(
+                product.id,
+                style: TextStyle(fontSize: 10),
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _createProduct(BuildContext context, Product product) {
+    return GestureDetector(
+      onTap: () {
+        productService.setActiveProduct(product);
+        Application.router.navigateTo(
+          context,
+          ProductDetailView.routePartial + product.id,
+        );
+      },
+      child: _productCard(product),
     );
   }
 }
